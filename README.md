@@ -97,7 +97,7 @@ Use `:wq` to save and exit vim.
 
 Now, it's time to start our server and see if it works.  
 - Open your terminal in the same directory as your index.js file and type: `node index.js`  
-*If everything goes well, you should see `**Server running on port 5000**` in your terminal. 
+*If everything goes well, you should see **`Server running on port 5000`** in your terminal. 
 ![Screenshot_20221215_173248](https://user-images.githubusercontent.com/105195327/207916194-983b83f2-f433-4d75-9b7d-fe38f692c80d.png)  
   
 - Open port 5000 in EC2 Security Groups. By editing security group, selecting Custom TCP and typing in 5000 for port range  
@@ -116,5 +116,29 @@ Our To-Do application needs to be able to carry out three actions:
 - Create a new task 
 - Display a list of all tasks 
 - Delete a completed task 
+
+Each task will be associated with some particular endpoint and will use different standard HTTP request methods: **POST, GET, DELETE.**
+We need to create routes for each task, that will define various endpoints the To-do app will depend on. So let us create a folder **routes** 
+
+- Create a folder by running the command below  
+> `mkdir routes`  
+
+- Change directory to the routes folder  
+> `cd routes`  
+
+- Create a file `api.js` with the command below  
+> `touch api.js`  
+
+- Open the file with the command below  
+> `vim api.js`  
+
+- Copy the code below in the file  
+![Screenshot_20221215_180544](https://user-images.githubusercontent.com/105195327/207923217-d126eff0-9f1e-406a-a710-f046593398bd.png)  
+
+Next, we will create the `Models` directory.  
+
+---
+### **MODELS** 
+
 
 
