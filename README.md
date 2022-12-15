@@ -139,6 +139,44 @@ Next, we will create the `Models` directory.
 
 ---
 ### **MODELS** 
+Since the app is going to make use of **Mongodb** which is a **NoSQL** database, we need to create a model. *A model is at the heart of JavaScript based applications, and it is what makes it interactive.*  
+We will also make use of models in defining the database schema. *This is important to enable us define the fields stored in each Mongodb document.*  
+
+- Install **mongoose** to create a Schema and a model. *mongoose is a Node.js package that makes working with mongodb easier.*  
+
+- Change directory back to the Todo folder with cd .. and install Mongoose  
+> `npm install mongoose`  
+  
+- Create a new folder **models**:  
+> `mkdir models`  
+
+- Change directory into the newly created ‘models’ folder with `cd models`  
+  
+- Inside the models folder, create a todo.js file  
+> `touch todo.js`  
+ 
+**Tip:** All three commands above can be defined in one line to be executed consequently with help of && operator, like this:
+> `mkdir models && cd models && touch todo.js`  
+  
+- Open the file created with `vim todo.js` then paste the code below in the file:  
+![Screenshot_20221215_193053](https://user-images.githubusercontent.com/105195327/207939698-a66b23ec-74db-4aa3-a1b0-ab13b3870d74.png)  
+  
+Now we need to update our routes from the file `api.js` in ‘routes’ directory to make use of the new model. 
+
+- In Routes directory, open 'api.js' with `vim api.js`, delete the code inside with `:%d` command and paste the code below into it, then save and exit.  
+![Screenshot_20221215_193542](https://user-images.githubusercontent.com/105195327/207940552-f35af13c-16df-49d9-adfd-a969a0f60ee2.png)  
+  
+---
+### **MONGODB DATABASE**  
+
+
+
+
+
+
+
+
+
 
 
 
