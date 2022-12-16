@@ -105,7 +105,9 @@ Now, it's time to start our server and see if it works.
 
 - Open your browser and try to access your server's Public IP followed by port 5000: 
 > `18.220.90.180:5000`   
-**Note:** You can find your public IP in your AWS web console EC2 details, or run 
+  
+**Note:** You can find your public IP in your AWS web console EC2 details, or run  
+  
 > `curl -s http://169.254.169.254/latest/meta-data/public-ipv4` 
 
 ![Screenshot_20221215_174358](https://user-images.githubusercontent.com/105195327/207918553-83279350-279f-4900-bf4f-bc29408ec1d1.png)  
@@ -168,15 +170,126 @@ Now we need to update our routes from the file `api.js` in ‘routes’ director
   
 ---
 ### **MONGODB DATABASE**  
+We'll be making use of mLAB for our databse needs, *mLab provides MongoDB database as a service solution (DBaaS).* To make life easy, you will need to sign up for a shared clusters free account [here.](https://www.mongodb.com/atlas-signup-from-mlab) 
+
+- Follow the signup process 
+![Screenshot_20221215_231905](https://user-images.githubusercontent.com/105195327/207980131-43c60d45-9af0-4c30-9ae3-ba32ceb00b2a.png)  
+
+- You'll be sent an email for verification, click the click in the email and verify your account  
+- After verification, resources to get started would be sent to your email 
+- Click on shared cluster 
+
+![Screenshot_20221215_232208](https://user-images.githubusercontent.com/105195327/207980220-4003f34c-b7b0-453e-b3d3-21f31ba9879c.png)  
+
+- Select **AWS** as the cloud provider, and choose a region near you.  
+
+**Complete a get started checklist**  
+- [X] Build your first cluster  
+- [X] Create your first database user  
+- [X] Whitelist your IP address  
+- [X] Load sample Data(optional)  
+- [X] Connect to your cluster  
+
+- Allow access to the MongoDB database from anywhere (Not secure, but it is ideal for testing)  
+![Screenshot_20221216_000312](https://user-images.githubusercontent.com/105195327/207985841-417406b2-9f64-4f5d-87a4-383f5068cc39.png)  
 
 
+**Important note**  
+In the image below, make sure you change the time of deleting the entry from 6hours to 1 week. 
+![Screenshot_20221216_000138](https://user-images.githubusercontent.com/105195327/207986121-0f37245e-f5d0-4cb0-aced-5bfb60e0d83a.png)
+
+- Create a MongoDB database and collection inside mLab   
+![DB Collections](https://user-images.githubusercontent.com/105195327/207987387-d94f3b97-9862-4113-8e59-b6697ea4cf90.png)  
+
+![Screenshot_20221216_001722](https://user-images.githubusercontent.com/105195327/207987441-5b1a25dc-28ba-4b16-b5d1-891e1fe1d711.png)  
 
 
+In the `index.js` file, we specified `process.env` to access environment variables, but we haven't created this file yet. So we need to do that now.  
+- Create a file in your Todo directory and name it .env  
+> touch .env  
+> vi .env  
+
+- Add the connection string to the access database in it, just as below:  
+> `DB = 'mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority'`  
+
+*Ensure to update **username**, **password**, **network-address** and **dbname** according to your setup*  
+  
+- Get your connection string  
+![cluster0](https://user-images.githubusercontent.com/105195327/207990895-17281924-2689-474a-89ac-579362094e21.png)  
+
+![cluster connect](https://user-images.githubusercontent.com/105195327/207990911-966d2729-2e7b-4d9f-a764-360e6bdf79ac.png)  
+
+![cluster js con](https://user-images.githubusercontent.com/105195327/207990920-dfd87a6c-904e-42ad-9c36-c26af9ca903d.png)  
 
 
+Now we need to update the index.js to reflect the use of .env so that Node.js can connect to the database. *Simply delete the existing content in the file, and update it with the code below.* 
 
+To do that using vim, follow the steps below:  
+- Open the file with vim index.js
+- Type :
+- Type %d
+- Hit ‘Enter’  
+*The entire content will be deleted.* 
+-Press `i` to enter *insert* mode in vim  
+- Paste the code below  
+  ![Screenshot_20221216_010335](https://user-images.githubusercontent.com/105195327/207992387-a39ce950-7dc4-4cd8-a96c-6a037ff32cc3.png)  
+  
+- Press esc 
+- Type `:wq`   
+  
+**Note:** Using environment variables to store information is considered more secure and best practice to separate configuration and secret data from the application, instead of writing connection strings directly inside the index.js application file.  
 
+- Start your server using the command: `node index.js`  
+  
+You should see a message ‘Database connected successfully’, if so – we have our backend configured. Now we are going to test it.  
+  ![Screenshot_20221216_011036](https://user-images.githubusercontent.com/105195327/207992890-e9de984a-1a40-48b7-8faf-cf3b5794e35a.png)  
 
+---
+### Testing Backend Code Without Frontend Using RESTful API  
+In this section, we will be using **Postman** to test our API.  
+- Click [Install Postman](https://www.getpostman.com/downloads/) to download and install postman on your machine.  
+- Click [Here](https://www.youtube.com/watch?v=FjgYtQK_zLE) to learn how perform CRUD operartions on Postman  
+  
+Test all the API endpoints and make sure they are working. For the endpoints that require body, you should send JSON back with the necessary fields since it’s what we setup in our code.
+  
+- Open Postman, create a POST request to the API http://<PublicIP-or-PublicDNS>:5000/api/todos. *This request sends a new task to our To-Do list so the application could store it in the database.*  
+**Note:** make sure your set header key Content-Type as application/json  
+![content type](https://user-images.githubusercontent.com/105195327/207997297-873ef898-3a5e-4f80-8826-e5eb98b49d75.png)  
 
+- Create a POST request  
+  ![post request](https://user-images.githubusercontent.com/105195327/207997480-b3bb26b6-9192-4c4b-942c-eec7304738bd.png)  
+![Screenshot_20221216_014229](https://user-images.githubusercontent.com/105195327/207997596-c9b436be-e3fe-4cce-8ee9-860aac666116.png)  
 
+- Create a GET request  
+![get request](https://user-images.githubusercontent.com/105195327/207997657-78ce2cb7-103a-457d-9bd4-6f841b519808.png) 
+*This request retrieves all existing records from out To-do application (backend requests these records from the database and sends it us back as a response to GET request)* 
+  
+- Create a DELETE request 
+![Screenshot_20221216_015141](https://user-images.githubusercontent.com/105195327/207997774-6fe9f191-5162-4e65-8f71-65fe21c54f4c.png) 
+*To delete a task – you need to send its ID as a part of DELETE request.*  
+ ![Screenshot_20221216_015126](https://user-images.githubusercontent.com/105195327/207997810-de8f129c-9554-4c73-8e1b-52e8a89d3cbb.png)  
+  
+
+By now you have tested the backend part of your To-Do application and have made sure that it supports all three operations we wanted:  
+- [X] Display a list of tasks – HTTP GET request  
+- [X] Add a new task to the list – HTTP POST request  
+- [X] Delete an existing task from the list – HTTP DELETE request  
+  
+We have successfully created our Backend, now let go create the Frontend... 
+  
+---
+---
+
+  ## **Step2 - FRONTEND CREATION** 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
