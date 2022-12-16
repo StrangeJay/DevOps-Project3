@@ -315,9 +315,9 @@ Before testing the react app, there are some dependencies that need to be instal
 2. Open the package.json file    
 > `vi package.json    
 
-3. Add the key value pair in the package.json file "proxy": "http://localhost:5000"  
+3. Add the key value pair in the package.json file "proxy": "http://localhost:3000"  
   
-The whole purpose of adding the proxy configuration in number 3 above is to make it possible to access the application directly from the browser by simply calling the server url like http://localhost:5000 rather than always including the entire path like http://localhost:5000/api/todos.  
+The whole purpose of adding the proxy configuration in number 3 above is to make it possible to access the application directly from the browser by simply calling the server url like http://localhost:3000 rather than always including the entire path like http://localhost:3000/api/todos.  
   
 Ensure you are inside the Todo directory, and simply run:  
 > `npm run dev`  
@@ -331,11 +331,233 @@ Your app should open and start running on localhost:3000
 **Important note:** To access the application from the Internet, you have to open TCP port 3000 on EC2 by adding a new Security Group rule. *Like we did previously, for port 5000.*  
 
 ### Creating Your React Components  
+For our Todo app, there will be two stateful components and one stateless component. *One of the advantages of react is that it makes use of components, which are reusable and also makes code modular.*  
+
+- Run the following cide from your Todo directory:  
+> `cd client`  
+  
+- Move to the src directory  
+> `cd src`  
+  
+- Inside your src folder create another folder called components  
+> `mkdir components`  
+  
+- Move into the components directory with  
+> `cd components`  
+  
+- Inside the ‘components’ directory, create three files **Input.js**, **ListTodo.js** and **Todo.js**.  
+> `touch Input.js ListTodo.js Todo.js`  
+  
+- Open Input.js file  
+> `vi Input.js`  
+  
+- Copy and paste the following  
+
+> import React, { Component } from 'react';  
+> import axios from 'axios';  
+>  
+> class Input extends Component {  
+>  
+> state = {  
+> action: ""  
+> }  
+>  
+> addTodo = () => {  
+> const task = {action: this.state.action}  
+>  
+>     if(task.action && task.action.length > 0){  
+>       axios.post('/api/todos', task)  
+>         .then(res => {  
+>           if(res.data){  
+>             this.props.getTodos();  
+>             this.setState({action: ""})  
+>           }  
+>         })  
+>         .catch(err => console.log(err))  
+>     }else {  
+>       console.log('input field required')  
+>     }  
+>  
+> }  
+>  
+> handleChange = (e) => {  
+> this.setState({  
+> action: e.target.value  
+> })  
+> }  
+>  
+> render() {  
+> let { action } = this.state;  
+> return (  
+> <div>  
+> <input type="text" onChange={this.handleChange} value={action} />  
+> <button onClick={this.addTodo}>add todo</button>  
+> </div>  
+> )  
+> }  
+> }  
+>  
+> export default Input  
+ 
+![Screenshot_20221216_131016](https://user-images.githubusercontent.com/105195327/208097681-2a4f4ffa-aa1f-43e2-bdd5-9ba7de420f1a.png)  
 
   
+To make use of [**Axios**](https://github.com/axios/axios), *which is a Promise based HTTP client for the browser and node.js*, you need to cd into your Todo folder from your terminal and run `npm install axios`.  
+  
+- Move to the src folder
+> `cd ..`  
+  
+- Move to clients folder  
+> `cd ..`  
+  
+- Move to Todo folder  
+> `cd ..`  
+  
+- Install Axios
+> `npm install axios`  
+  
+- Go to ‘components’ directory  
+> `cd client/src/components`  
+  
+- After that, open your ListTodo.js  
+> `vi ListTodo.js`  
+  
+- In the ListTodo.js, copy and paste the following code  
+![Screenshot_20221216_140010](https://user-images.githubusercontent.com/105195327/208103936-9eb21a4f-988b-4378-ab9b-f7d8fbad18ab.png)  
+
+- In your Todo.js file, write the following code   
+![Screenshot_20221216_140739](https://user-images.githubusercontent.com/105195327/208105206-2c784f58-5d84-4323-b0e0-b5a2e9c005bc.png)  
   
   
+We need to make a little adjustment to our react code. Delete the logo and adjust our App.js.
+
+- Move to the src folder  
+> `cd ..`  
   
+- Make sure that you are in the src folder and run
+> `vi App.js`  
   
+- Copy and paste the code below into it    
+![Screenshot_20221216_141724](https://user-images.githubusercontent.com/105195327/208106784-f981c69f-e2c8-4e45-b764-8dd638b7c5fe.png)  
+
   
+- After pasting, exit the editor.  
+  
+- In the src directory open the App.css  
+> `vi App.css`  
+  
+- Paste the following code into App.css:  
+> .App {  
+> text-align: center;  
+> font-size: calc(10px + 2vmin);  
+> width: 60%;  
+> margin-left: auto;  
+> margin-right: auto;  
+> }  
+>  
+> input {  
+> height: 40px;  
+> width: 50%;  
+> border: none;  
+> border-bottom: 2px #101113 solid;  
+> background: none;  
+> font-size: 1.5rem;  
+> color: #787a80;  
+> }  
+>  
+> input:focus {  
+> outline: none;  
+> }  
+>  
+> button {  
+> width: 25%;  
+> height: 45px;  
+> border: none;  
+> margin-left: 10px;  
+> font-size: 25px;  
+> background: #101113;  
+> border-radius: 5px;  
+> color: #787a80;  
+> cursor: pointer;  
+> }  
+>  
+> button:focus {  
+> outline: none;  
+> }  
+>  
+> ul {  
+> list-style: none;  
+> text-align: left;  
+> padding: 15px;  
+> background: #171a1f;  
+> border-radius: 5px;  
+> }  
+>  
+> li {  
+> padding: 15px;  
+> font-size: 1.5rem;  
+> margin-bottom: 15px;  
+> background: #282c34;  
+> border-radius: 5px;  
+> overflow-wrap: break-word;  
+> cursor: pointer;  
+> }  
+>  
+> @media only screen and (min-width: 300px) {  
+> .App {  
+> width: 80%;  
+> }  
+>  
+> input {  
+> width: 100%  
+> }  
+>  
+> button {  
+> width: 100%;  
+> margin-top: 15px;  
+> margin-left: 0;  
+> }  
+> }  
+>  
+> @media only screen and (min-width: 640px) {  
+> .App {  
+> width: 60%;  
+> }  
+>  
+> input {  
+> width: 50%;  
+> }  
+>  
+> button {  
+> width: 30%;  
+> margin-left: 10px;  
+> margin-top: 0;  
+> }  
+> }  
+
+  
+![Screenshot_20221216_143059](https://user-images.githubusercontent.com/105195327/208109722-2b04e974-f9fb-4b58-8784-87925d66f95b.png)  
+
+  
+### Exit
+- In the src directory open the index.css  
+> `vim index.css`  
+  
+- Copy and paste the code below:  
+  
+![Screenshot_20221216_143638](https://user-images.githubusercontent.com/105195327/208110066-a9dc2fbe-4f17-4dfe-a82b-85b6ec4c598b.png)  
+  
+- Go to the Todo directory  
+> `cd ../..`  
+  
+In the Todo directory, run:  
+> `npm run dev`  
+  
+In the absence of errors when saving all these files, our To-Do app should be ready and fully functional with the functionality discussed earlier: creating a task, deleting a task and viewing all your tasks.  
+![Screenshot_20221216_150144](https://user-images.githubusercontent.com/105195327/208114850-7f962a8b-e45c-4d19-bac5-4c8ca913e5d0.png)  
+
+---
+---  
+#Congratulations  
+In this Project #3 you have made a simple To-Do and deployed it to MERN stack. You wrote a frontend application using React.js that communicates with a backend application written using Expressjs. You also created a MongoDB backend for storing tasks in a database.
   
