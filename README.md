@@ -1,28 +1,28 @@
 # SIMPLE TO-DO APPLICATION ON MERN WEB STACK
-*In this project you're tasked with implementing a web solution based on MERN stack in AWS cloud.*  
+*In this project, you're tasked with implementing a web solution based on the MERN stack in the AWS cloud.*  
 
 **MERN** Web stack consists of: 
 - **MongoDB:** A document-based, No-SQL database used to store application data in a form of documents.  
 
 - **ExpressJS:** A server-side Web Application framework for Node.js.  
 
-- **ReactJS:**  A frontend framework developed by Facebook. It is based on JavaScript, and used to build User Interface (UI) components.  
+- **ReactJS:**  A frontend framework developed by Facebook. It is based on JavaScript and used to build User Interface (UI) components.  
 
 - **Node.js:** A JavaScript runtime environment, used to run JavaScript on a machine rather than in a browser.  
 
 ![Screenshot_20221215_130237](https://user-images.githubusercontent.com/105195327/207854569-28033a7e-6b42-471f-9ceb-9fb2b3495cb9.png)  
   
   
-As shown in the illustration above, a user interacts with the ReactJS UI components at the application front-end residing in the browser. This frontend is served by the application backend residing in a server, through ExpressJS running on top of NodeJS.
+As shown in the illustration above, a user interacts with the ReactJS UI components at the application frontend residing in the browser. This frontend is served by the application backend residing in a server, through ExpressJS running on top of NodeJS.
 Any interaction that causes a data change request is sent to the NodeJS based Express server, which grabs data from the MongoDB database if required, and returns the data to the frontend of the application, which is then presented to the user.
  
 
 ## Step0 - Preparing prerequisites 
-In order to complete this project, you will need an AWS account and a virtual server with Ubuntu server OS. If you do not have an AWS account, create one [here](https://aws.amazon.com/resources/create-account/) and refer to [project2](https://github.com/StrangeJay/DevOps-Project2/edit/main/README.md) on instructions on how to set up your EC2 instance.  
+To complete this project, you will need an AWS account and a virtual server with an Ubuntu server OS. If you do not have an AWS account, create one [here](https://aws.amazon.com/resources/create-account/) and refer to [project2](https://github.com/StrangeJay/DevOps-Project2/edit/main/README.md) for instructions on how to set up your EC2 instance.  
 
 **Note:** You can have multiple EC2 instances running at a time, but make sure to stop the ones you don't need at the moment, and terminate the ones you have no further use of. *Your public IP changes when you stop and restart an instance.*  
 
-In previous tasks, we've been making use of putty to connect to our ec2 instances. For this project, we are going to explore the usage of windows terminal. Watch this videos to learn how to set up windows terminal on your PC.  
+In previous tasks, we've been making use of putty to connect to our ec2 instances. For this project, we are going to explore the usage of a windows terminal. Watch these videos to learn how to set up windows terminal on your PC.  
 - [windows installation part1](https://youtu.be/R-qcpehB5HY)
 - [windows installation part2](https://youtu.be/jsNIlK5s6pI)
 
@@ -68,12 +68,12 @@ install the Node.js on the server, with the following command:
  
 ![Screenshot_20221215_152045](https://user-images.githubusercontent.com/105195327/207884845-70a177b8-0e9c-40ce-8e0e-bcfe9a16bde9.png)  
 
-- Run the command `ls` to confirm that you have package.json file created.  
+- Run the command `ls` to confirm that you have a package.json file created.  
 - Install ExpressJs and create the Routes directory.  
 
 ---
 ### INSTALL EXPRESSJS  
-Express is a framework for Node.js, it takes care of a lot of things developers would have programmed straight out the box. *it simplifies development, and abstracts a lot of low-level details. For example, it helps to define routes of your application based on HTTP methods and URLs*  
+Express is a framework for Node.js, it takes care of a lot of things developers would have programmed straight out of the box. *it simplifies development and abstracts a lot of low-level details. For example, it helps to define routes of your application based on HTTP methods and URLs*  
 
 - Install express using npm:  
 > `npm install express`  
@@ -100,7 +100,7 @@ Now, it's time to start our server and see if it works.
 *If everything goes well, you should see **`Server running on port 5000`** in your terminal. 
 ![Screenshot_20221215_173248](https://user-images.githubusercontent.com/105195327/207916194-983b83f2-f433-4d75-9b7d-fe38f692c80d.png)  
   
-- Open port 5000 in EC2 Security Groups. By editing security group, selecting Custom TCP and typing in 5000 for port range  
+- Open port 5000 in EC2 Security Groups. By editing the security group, selecting Custom TCP and typing in 5000 for the port range  
 ![custom TP](https://user-images.githubusercontent.com/105195327/207917899-1a980d58-aaae-45bb-81a2-7a0f82fe9a23.png)  
 
 - Open your browser and try to access your server's Public IP followed by port 5000: 
@@ -119,13 +119,13 @@ Our To-Do application needs to be able to carry out three actions:
 - Display a list of all tasks 
 - Delete a completed task 
 
-Each task will be associated with some particular endpoint and will use different standard HTTP request methods: **POST, GET, DELETE.**
-We need to create routes for each task, that will define various endpoints the To-do app will depend on. So let us create a folder **routes** 
+Each task will be associated with some particular endpoint and will use different standard HTTP request methods: **POST, GET, and DELETE.**
+We need to create routes for each task, that will define various endpoints the To-do app will depend on. So let us create a folder named **routes** 
 
 - Create a folder by running the command below  
 > `mkdir routes`  
 
-- Change directory to the routes folder  
+- Change the directory to the routes folder  
 > `cd routes`  
 
 - Create a file `api.js` with the command below  
@@ -141,20 +141,20 @@ Next, we will create the `Models` directory.
 
 ---
 ### **MODELS** 
-Since the app is going to make use of **Mongodb** which is a **NoSQL** database, we need to create a model. *A model is at the heart of JavaScript based applications, and it is what makes it interactive.*  
-We will also make use of models in defining the database schema. *This is important to enable us define the fields stored in each Mongodb document.*  
+Since the app is going to make use of **MongoDB** which is a **NoSQL** database, we need to create a model. *A model is at the heart of JavaScript-based applications, and it is what makes them interactive.*  
+We will also make use of models in defining the database schema. *This is important to enable us to define the fields stored in each MongoDB document.*  
 
-- Install **mongoose** to create a Schema and a model. *mongoose is a Node.js package that makes working with mongodb easier.*  
+- Install **mongoose** to create a Schema and a model. *mongoose is a Node.js package that makes working with MongoDB easier.*  
 
-- Change directory back to the Todo folder with cd .. and install Mongoose  
+- Change the directory back to the Todo folder with cd .. and install Mongoose  
 > `npm install mongoose`  
   
-- Create a new folder **models**:  
+- Create a new folder called **models**:  
 > `mkdir models`  
 
-- Change directory into the newly created ‘models’ folder with `cd models`  
+- Change the directory into the newly created ‘models’ folder with `cd models`  
   
-- Inside the models folder, create a todo.js file  
+- Inside the model's folder, create a todo.js file  
 > `touch todo.js`  
  
 **Tip:** All three commands above can be defined in one line to be executed consequently with help of && operator, like this:
@@ -163,27 +163,27 @@ We will also make use of models in defining the database schema. *This is import
 - Open the file created with `vim todo.js` then paste the code below in the file:  
 ![Screenshot_20221215_193053](https://user-images.githubusercontent.com/105195327/207939698-a66b23ec-74db-4aa3-a1b0-ab13b3870d74.png)  
   
-Now we need to update our routes from the file `api.js` in ‘routes’ directory to make use of the new model. 
+Now we need to update our routes from the file `api.js` in the ‘routes’ directory to make use of the new model. 
 
-- In Routes directory, open 'api.js' with `vim api.js`, delete the code inside with `:%d` command and paste the code below into it, then save and exit.  
+- In the Routes directory, open 'api.js' with `vim api.js`, delete the code inside with `:%d` command and paste the code below into it, then save and exit.  
 ![Screenshot_20221215_193542](https://user-images.githubusercontent.com/105195327/207940552-f35af13c-16df-49d9-adfd-a969a0f60ee2.png)  
   
 ---
 ### **MONGODB DATABASE**  
-We'll be making use of mLAB for our databse needs, *mLab provides MongoDB database as a service solution (DBaaS).* To make life easy, you will need to sign up for a shared clusters free account [here.](https://www.mongodb.com/atlas-signup-from-mlab) 
+We'll be making use of mLAB for our database needs, *mLab provides MongoDB database as a service solution (DBaaS).* To make life easy, you will need to sign up for a shared clusters free account [here.](https://www.mongodb.com/atlas-signup-from-mlab) 
 
 - Follow the signup process 
 ![Screenshot_20221215_231905](https://user-images.githubusercontent.com/105195327/207980131-43c60d45-9af0-4c30-9ae3-ba32ceb00b2a.png)  
 
 - You'll be sent an email for verification, click the click in the email and verify your account  
 - After verification, resources to get started would be sent to your email 
-- Click on shared cluster 
+- Click on the shared cluster 
 
 ![Screenshot_20221215_232208](https://user-images.githubusercontent.com/105195327/207980220-4003f34c-b7b0-453e-b3d3-21f31ba9879c.png)  
 
 - Select **AWS** as the cloud provider, and choose a region near you.  
 
-**Complete a get started checklist**  
+**Complete a get-started checklist**  
 - [X] Build your first cluster  
 - [X] Create your first database user  
 - [X] Whitelist your IP address  
@@ -195,7 +195,7 @@ We'll be making use of mLAB for our databse needs, *mLab provides MongoDB databa
 
 
 **Important note**  
-In the image below, make sure you change the time of deleting the entry from 6hours to 1 week. 
+In the image below, make sure you change the time of deleting the entry from 6 hours to 1 week. 
 ![Screenshot_20221216_000138](https://user-images.githubusercontent.com/105195327/207986121-0f37245e-f5d0-4cb0-aced-5bfb60e0d83a.png)
 
 - Create a MongoDB database and collection inside mLab   
@@ -248,11 +248,11 @@ You should see a message ‘Database connected successfully’, if so – we hav
 ### Testing Backend Code Without Frontend Using RESTful API  
 In this section, we will be using **Postman** to test our API.  
 - Click [Install Postman](https://www.getpostman.com/downloads/) to download and install postman on your machine.  
-- Click [Here](https://www.youtube.com/watch?v=FjgYtQK_zLE) to learn how perform CRUD operartions on Postman  
+- Click [Here](https://www.youtube.com/watch?v=FjgYtQK_zLE) to learn how to perform CRUD operations on Postman.  
   
-Test all the API endpoints and make sure they are working. For the endpoints that require body, you should send JSON back with the necessary fields since it’s what we setup in our code.
+Test all the API endpoints and make sure they are working. For the endpoints that require a body, you should send JSON back with the necessary fields since it’s what we set up in our code.
   
-- Open Postman, create a POST request to the API http://<PublicIP-or-PublicDNS>:5000/api/todos. *This request sends a new task to our To-Do list so the application could store it in the database.*  
+- Open Postman and create a POST request to the API http://<PublicIP-or-PublicDNS>:5000/api/todos. *This request sends a new task to our To-Do list so the application could store it in the database.*  
 **Note:** make sure your set header key Content-Type as application/json  
 ![content type](https://user-images.githubusercontent.com/105195327/207997297-873ef898-3a5e-4f80-8826-e5eb98b49d75.png)  
 
@@ -262,11 +262,11 @@ Test all the API endpoints and make sure they are working. For the endpoints tha
 
 - Create a GET request  
 ![get request](https://user-images.githubusercontent.com/105195327/207997657-78ce2cb7-103a-457d-9bd4-6f841b519808.png) 
-*This request retrieves all existing records from out To-do application (backend requests these records from the database and sends it us back as a response to GET request)* 
+*This request retrieves all existing records from our To-do application (the backend requests these records from the database and sends them back as a response to the GET request)* 
   
 - Create a DELETE request 
 ![Screenshot_20221216_015141](https://user-images.githubusercontent.com/105195327/207997774-6fe9f191-5162-4e65-8f71-65fe21c54f4c.png) 
-*To delete a task – you need to send its ID as a part of DELETE request.*  
+*To delete a task – you need to send its ID as a part of the DELETE request.*  
  ![Screenshot_20221216_015126](https://user-images.githubusercontent.com/105195327/207997810-de8f129c-9554-4c73-8e1b-52e8a89d3cbb.png)  
   
 
@@ -275,13 +275,13 @@ By now you have tested the backend part of your To-Do application and have made 
 - [X] Add a new task to the list – HTTP POST request  
 - [X] Delete an existing task from the list – HTTP DELETE request  
   
-We have successfully created our Backend, now let go create the Frontend... 
+We have successfully created our Backend, now let's go create the Frontend... 
   
 ---
 ---
 
   ## **Step2 - FRONTEND CREATION** 
-We're going to create a user interface for a Web client (browser) to interact with the application via API. To start out with the frontend of our To-Do app, we will use the `create-react-app` command to scaffold our app. 
+We're going to create a user interface for a Web client (browser) to interact with the application via API. To start with the frontend of our To-Do app, we will use the `create-react-app` command to scaffold our app. 
   
 - Run this code in the Todo directory:  
 > `npx create-react-app client`  
@@ -289,7 +289,7 @@ We're going to create a user interface for a Web client (browser) to interact wi
 This will create a new folder called **client** in your Todo directory, where you will add all the react code.  
 
 ### Running a React App  
-Before testing the react app, there are some dependencies that need to be installed.
+Before testing the react app, some dependencies need to be installed.
 
 1. Install [concurrently](https://www.npmjs.com/package/concurrently). *It is used to run more than one command simultaneously from the same terminal window*  
 > `npm install concurrently --save-dev`  
@@ -297,7 +297,7 @@ Before testing the react app, there are some dependencies that need to be instal
 2. Install [nodemon](https://www.npmjs.com/package/nodemon). *It is used to run and monitor the server.* If there is any change in the server code, nodemon will restart it automatically and load the new changes.  
 > `npm install nodemon --save-dev`  
   
-3. In Todo folder, open the package.json file. Change the highlighted part of the below screenshot and replace with the code below  
+3. In the Todo folder, open the package.json file. Change the highlighted part of the below screenshot and replace it with the code below  
 > "scripts": {  
 > "start": "node index.js",  
 > "start-watch": "nodemon index.js",  
@@ -309,15 +309,15 @@ Before testing the react app, there are some dependencies that need to be instal
 ![Screenshot_20221216_123523](https://user-images.githubusercontent.com/105195327/208089796-7af3f46a-b87e-4762-a053-4be7143f9271.png)  
 
 ### Configure Proxy in **package.json**   
-1. Change directory to 'client'  
+1. Change the directory to 'client'  
 > `cd client`  
 
 2. Open the package.json file    
 > `vi package.json    
 
-3. Add the key value pair in the package.json file "proxy": "http://localhost:3000"  
+3. Add the key-value pair in the package.json file "proxy": "http://localhost:3000"  
   
-The whole purpose of adding the proxy configuration in number 3 above is to make it possible to access the application directly from the browser by simply calling the server url like http://localhost:5000 rather than always including the entire path like http://localhost:5000/api/todos.  
+The whole purpose of adding the proxy configuration in number 3 above is to make it possible to access the application directly from the browser by simply calling the server URL like http://localhost:5000 rather than always including the entire path like http://localhost:5000/api/todos.  
   
 Ensure you are inside the Todo directory, and simply run:  
 > `npm run dev`  
@@ -333,7 +333,7 @@ Your app should open and start running on localhost:3000
 ### Creating Your React Components  
 For our Todo app, there will be two stateful components and one stateless component. *One of the advantages of react is that it makes use of components, which are reusable and also makes code modular.*  
 
-- Run the following cide from your Todo directory:  
+- Run the following code from your Todo directory:  
 > `cd client`  
   
 - Move to the src directory  
@@ -402,21 +402,21 @@ For our Todo app, there will be two stateful components and one stateless compon
 ![Screenshot_20221216_131016](https://user-images.githubusercontent.com/105195327/208097681-2a4f4ffa-aa1f-43e2-bdd5-9ba7de420f1a.png)  
 
   
-To make use of [**Axios**](https://github.com/axios/axios), *which is a Promise based HTTP client for the browser and node.js*, you need to cd into your Todo folder from your terminal and run `npm install axios`.  
+To make use of [**Axios**](https://github.com/axios/axios), *which is a Promise-based HTTP client for the browser and node.js*, you need to cd into your Todo folder from your terminal and run `npm install axios`.  
   
 - Move to the src folder
 > `cd ..`  
   
-- Move to clients folder  
+- Move to the clients folder  
 > `cd ..`  
   
-- Move to Todo folder  
+- Move to the Todo folder  
 > `cd ..`  
   
 - Install Axios
 > `npm install axios`  
   
-- Go to ‘components’ directory  
+- Go to the ‘components’ directory  
 > `cd client/src/components`  
   
 - After that, open your ListTodo.js  
